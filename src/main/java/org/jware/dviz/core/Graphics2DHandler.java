@@ -17,15 +17,12 @@ package org.jware.dviz.core;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
-import org.jware.dviz.util.Utilities;
-import static org.jware.dviz.util.Utilities.Utility;
 
 /**
  * File: Graphics2DHandler.java Created On: 04/00/2014
