@@ -1,7 +1,6 @@
 JwareDataVisualizationLibrary
 =============================
-JwareDataVisualizationLibrary
-=============================
+
 
 A work in progress library for doing data visualization.
 
