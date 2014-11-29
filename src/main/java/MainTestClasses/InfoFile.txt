@@ -1,0 +1,23 @@
+
+Specific properties you should always restore if modified: (because they can do Bad Things and have Unexpected Consequences):
+
+Transform - because modifications to this will stack on top of each other and get very, very hard to reset. Beware: this is modified 
+    by the translate, shear, scale, rotate, and transform methods of Graphics2D. Modifying transforms should be used with CAUTION.
+ 
+Stroke -- because (at least in my configuration), leaving this default runs much faster than any setting even if equivalent to default. 
+    Don't ask -- it's a result of the Java2D graphics pipelines accelerating the default case using graphics hardware.
+
+Clip: will result in weird bugs where only part of the screen draws.
+
+Composite: most operations probably don't expect this to be something weird.
+
+Properties to not worry about:
+
+RenderingHints. These are things you can easy set and restore, and generally you want to leave them set a certain way 
+ (antialiasing on, etc) for the whole time the app is running. Changing RenderingHints will rarely break rendering of components, 
+ although it might make it uglier.
+ 
+Background color and paint color. Most things will modify these before drawing anyway.
+
+Font: likewise.
+ 
