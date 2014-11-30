@@ -168,7 +168,13 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      */
     protected Container focusController;
 
-    /**
+     /**
+     * Set to use the same window when creating more than one handler.
+     * Need to implement.
+     */    
+    private static boolean REUSE;
+    
+   /**
      * A window count for exiting the program, Frames will dispose until the
      * last one which will EXIT_ON_CLOSE..
      */

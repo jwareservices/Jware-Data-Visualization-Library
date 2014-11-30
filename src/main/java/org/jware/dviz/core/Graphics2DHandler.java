@@ -1,6 +1,5 @@
 package org.jware.dviz.core;
 
-
 /*
  * Copyright (C) 2014 J. Paul Jackson <jwareservices@gmail.com>
  *
@@ -35,56 +34,109 @@ import java.awt.geom.Rectangle2D;
 public class Graphics2DHandler extends AbstractGraphicsHandler {
 
     /**
-     * Set to use the same window when creating more than one handler.
-     * Need to implement.
-     */    
-    private boolean REUSE = false;
-    
-    
-    /**
      * Future use.
      */
-    Line2D.Float line = new Line2D.Float();
-    Ellipse2D.Float ellipse = new Ellipse2D.Float();
-    Rectangle2D.Float rect = new Rectangle2D.Float();
-    Arc2D.Float arc = new Arc2D.Float();
+    Line2D.Float line;
+    Ellipse2D.Float ellipse;
+    Rectangle2D.Float rect;
+    Arc2D.Float arc;
 
+    /**
+     * 
+     */
     public Graphics2DHandler() {
-        super();
-    }
-
-    public void line(float x1, float y1, float x2, float y2) {
-        line.setLine(x1, y1, x2, y2);
-        beginDraw();
-        setStroke(wideStroke);
-        ((Graphics2D) grafPort).draw(line);
-        endDraw();
-    }
-
-    public void circle(int x, int y, int radius ) {     
-        ellipse.setFrameFromCenter(x, y, radius, radius );
-        beginDraw();
-       ((Graphics2D) grafPort).draw(ellipse);
-       endDraw();
-    }
-    
-    public void fillRect(float x1, float y1, float x2, float y2) {
-        beginDraw();
-        grafPort.fillRect((int)x1, (int)y1, (int)x2, (int)y2);
-        endDraw();
-    }
-
-    public void fillRect(int x1, int y1, int x2, int y2) {
-        beginDraw();
-        grafPort.fillRect(50, 50, 100, 100);
-        endDraw();
-    }
         
-    public void background(int rgb) {
+        super();
+
+        line = new Line2D.Float();
+        ellipse = new Ellipse2D.Float();
+        rect = new Rectangle2D.Float();
+        arc = new Arc2D.Float();
+    }
+
+    /**
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
+    public void line(float x1, float y1, float x2, float y2) {
+        
+        line.setLine(x1, y1, x2, y2);
+        
         beginDraw();
+
+        setStroke(wideStroke);
+        
+        ((Graphics2D) grafPort).draw(line);
+
+        endDraw();
+    }
+
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param radius 
+     */
+    public void circle(int x, int y, int radius) {
+        
+        ellipse.setFrameFromCenter(x, y, radius, radius);
+        
+        beginDraw();
+        
+        ((Graphics2D) grafPort).draw(ellipse);
+        
+        endDraw();
+    }
+
+    /**
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
+    public void fillRect(float x1, float y1, float x2, float y2) {
+        
+        beginDraw();
+        
+        grafPort.fillRect((int) x1, (int) y1, (int) x2, (int) y2);
+        
+        endDraw();
+    }
+
+    /**
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
+    public void fillRect(int x1, int y1, int x2, int y2) {
+        
+        beginDraw();
+        
+        grafPort.fillRect(50, 50, 100, 100);
+        
+        endDraw();
+    }
+
+    /**
+     * 
+     * @param rgb 
+     */
+    public void background(int rgb) {
+        
+        beginDraw();
+        
         Color c = new Color(rgb);
+        
         grafPort.setColor(c);
+        
         grafPort.fillRect(0, 0, frameWidth, frameHeight);
+        
         endDraw();
     }
 
