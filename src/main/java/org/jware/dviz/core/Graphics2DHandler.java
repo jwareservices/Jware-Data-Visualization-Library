@@ -63,14 +63,10 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      */
     public void line(float x1, float y1, float x2, float y2) {
         
-        line.setLine(x1, y1, x2, y2);
-        
+        line.setLine(x1, y1, x2, y2);     
         beginDraw();
-
         setStroke(wideStroke);
-        
         ((Graphics2D) grafPort).draw(line);
-
         endDraw();
     }
 
@@ -81,13 +77,9 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      * @param radius 
      */
     public void circle(int x, int y, int radius) {
-        
         ellipse.setFrameFromCenter(x, y, radius, radius);
-        
         beginDraw();
-        
         ((Graphics2D) grafPort).draw(ellipse);
-        
         endDraw();
     }
 
@@ -99,11 +91,8 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      * @param y2 
      */
     public void fillRect(float x1, float y1, float x2, float y2) {
-        
         beginDraw();
-        
         grafPort.fillRect((int) x1, (int) y1, (int) x2, (int) y2);
-        
         endDraw();
     }
 
@@ -115,11 +104,8 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      * @param y2 
      */
     public void fillRect(int x1, int y1, int x2, int y2) {
-        
         beginDraw();
-        
         grafPort.fillRect(50, 50, 100, 100);
-        
         endDraw();
     }
 
@@ -128,15 +114,10 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      * @param rgb 
      */
     public void background(int rgb) {
-        
         beginDraw();
-        
         Color c = new Color(rgb);
-        
         grafPort.setColor(c);
-        
         grafPort.fillRect(0, 0, frameWidth, frameHeight);
-        
         endDraw();
     }
 
