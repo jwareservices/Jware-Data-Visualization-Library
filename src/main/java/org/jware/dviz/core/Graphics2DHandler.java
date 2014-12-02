@@ -34,7 +34,7 @@ import java.awt.geom.Rectangle2D;
 public class Graphics2DHandler extends AbstractGraphicsHandler {
 
     /**
-     * Future use.
+     * Pre-set primitives for re-use
      */
     Line2D.Float line;
     Ellipse2D.Float ellipse;

@@ -498,7 +498,9 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      * @param y
      */
     public void translate(float x, float y) {
+        beginDraw();
         grafPort.translate(x, y);
+        endDraw();
     }
 
     /**
@@ -517,8 +519,10 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      * @param c
      */
     public void setFillColor(Color c) {
+        beginDraw();
         currentBackColor = c;
         grafPort.setColor(currentBackColor);
+        endDraw();
     }
 
     /**
@@ -526,8 +530,10 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      * @param c
      */
     public void setColor(Color c) {
+        beginDraw();
         currentForeColor = c;
         grafPort.setColor(currentForeColor);
+        endDraw();
     }
 
     /**
@@ -551,7 +557,7 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      * @param drawable
      */
     public void removeDrawable(Drawable drawable) {
-        drawables.add(drawable);
+        drawables.remove(drawable);
     }
 
     /**
@@ -584,11 +590,10 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      */
     public void loop() {
         drawAll();
-     //   update();
     }
 
     /**
-     * Call to set up grafPort when not using Drawables.
+     * Prepare grafPort for drawing.
      */
     protected void beginDraw() {
         grafPort = (Graphics2D) grafPortStrategy.getDrawGraphics();

@@ -25,7 +25,8 @@ import java.awt.Graphics;
  * 
  * @author J. Paul Jackson <jwareservices@gmail.com>
  *
- * Purpose:
+ * Purpose: Call back interface.
+ * This will ultimately not be used.
  */
 public interface Drawable {
 
