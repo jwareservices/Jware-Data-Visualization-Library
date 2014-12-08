@@ -1,3 +1,4 @@
+
 package org.jware.dviz.core;
 
 /*
@@ -16,6 +17,7 @@ package org.jware.dviz.core;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;

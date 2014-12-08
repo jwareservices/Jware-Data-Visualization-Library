@@ -47,7 +47,7 @@ import javax.swing.JPanel;
 
 /**
  * @author J. Paul Jackson <jwareservices@gmail.com>
- * Future use.
+ * For future use.
  */
 class GrafPortCanvas extends Canvas {
 
@@ -72,14 +72,20 @@ interface JDVLAbstractGraphicsInputListener extends MouseListener, MouseMotionLi
  *
  * @author J. Paul Jackson <jwareservices@gmail.com>
  *
- * Purpose: Provide an easy to wrapper for the Java drawing interfaces.
+ * Purpose: Provide an easy to use wrapper for the Java drawing interfaces.
  */
-public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListener {
+abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListener {
 
+    /**
+     * This adapter is used to track the number of windows that have been opened
+     * by a Handler/s and controls whether we simply close a window when the user
+     * clicks the close window control or exit the program altogether. 
+     */
     private static WindowListener windowCloser = new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
             lastWindow--;
             e.getWindow().setVisible(false);
+ //           e.getWindow().dispose();
             if (lastWindow <= 0) {
                 System.exit(0);
             }
@@ -100,12 +106,23 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
     public static final float HALF_PI = (float) (Math.PI / 2.0);
 
     /**
-     * Key input stuff, ex: if ((key == CODED) && (eventyCode == UP))
+     * Conversion constants to convert degrees to radians by multiplying
+     * the degree by this constant.
+     */
+    public static final float DEG_TO_RAD = PI/180.0f;
+    
+    /**
+     * Multiply a radian by this constant to get degree,
+     */
+    public static final float RAD_TO_DEG = 180.0f/PI;
+    
+    /**
+     * Key input stuff, ex: if ((key == CODED) && (eventCode == UP))
      */
     public static final int CODED = 0xffff;
 
     /**
-     * The key will be CODED and eventyCode will be this value
+     * The key will be CODED and event Code will be this value
      */
     public static final int UP = KeyEvent.VK_UP;
     public static final int DOWN = KeyEvent.VK_DOWN;
@@ -113,11 +130,16 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
     public static final int RIGHT = KeyEvent.VK_RIGHT;
 
     /**
-     * The key will be CODED and eventyCode will be this value
+     * The key will be CODED and event Code will be this value
      */
     public static final int ALT = KeyEvent.VK_ALT;
     public static final int CONTROL = KeyEvent.VK_CONTROL;
     public static final int SHIFT = KeyEvent.VK_SHIFT;
+
+    /**
+     * The current key.
+     */
+    public char key;
 
     /**
      * The maximum size of the push/pop stack for holding the current graphics
@@ -170,7 +192,7 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
 
      /**
      * Set to use the same window when creating more than one handler.
-     * Need to implement.
+     * Unimplemented for now.
      */    
     private static boolean REUSE;
     
@@ -612,7 +634,12 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
     }
 
     /**
-     * Update is called to do the actual draw, for use with Drawables.
+     * Update is called to do the actual draw. Set up the graphics object,
+     * draw into it, dispose of it, show the draw, force the sync. This is  
+     * not required, as the system will eventually update the screen but 
+     * based on the code snippet I found it can help prevent flickering. 
+     * It can't hurt and I don't see where it really cost anything 
+     * as far a resources go.
      */
     private void update() {
         do {
@@ -631,24 +658,22 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
 
         // According to the article this call is good to keep the screen from flickering.
         // It could take a couple of extras ms for the screen to update if not called directly,
-        // causing a flicker.  So this call basically forces the peer to update.
-        // http://docs.oracle.com/javase/6/docs/api/java/awt/Toolkit.html#sync()
+        // causing a flicker.  So this call basically forces the peer to update. Here's the
+        // java doc. http://docs.oracle.com/javase/6/docs/api/java/awt/Toolkit.html#sync()
         Toolkit.getDefaultToolkit().sync();
     }
 
     /**
-     *
-     * @return
+     * @return mouse x position
      */
-    public int mouseX() {
+    public final int mouseX() {
         return mouseX;
     }
 
     /**
-     *
-     * @return
+     * @return mouse y position
      */
-    public int mouseY() {
+    public final int mouseY() {
         return mouseY;
     }
 
@@ -712,13 +737,29 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      */
     @Override
     public void mouseMoved(MouseEvent event) {
+        mouseX = event.getX();
+        mouseY = event.getY();
     }
 
+    ///////////////////////////////////////////////////////
+    //
+    //       KEY BOARD HANDLER CODE
+    //
+    ///////////////////////////////////////////////////////
+    
+    /**
+     * @return 
+     */
+    public char key() {
+        return key;
+    }
+ 
     /**
      * @param event
      */
     @Override
     public void keyTyped(KeyEvent event) {
+        key = event.getKeyChar();
     }
 
     /**
@@ -726,6 +767,7 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
      */
     @Override
     public void keyPressed(KeyEvent event) {
+        key = event.getKeyChar();
     }
 
     /**

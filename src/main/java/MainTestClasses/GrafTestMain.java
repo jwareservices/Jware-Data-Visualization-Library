@@ -16,13 +16,14 @@ package MainTestClasses;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import org.jware.dviz.core.DrawSomeCircles;
 import org.jware.dviz.core.Drawable;
 import org.jware.dviz.core.DrawSomeRectangles;
 import org.jware.dviz.core.DrawSomeLines;
-import org.jware.dviz.core.AbstractGraphicsHandler;
+//import org.jware.dviz.core.AbstractGraphicsHandler;
 import org.jware.dviz.core.Graphics2DHandler;
 import org.jware.dviz.util.Utilities;
 import static org.jware.dviz.util.Utilities.Utility;
@@ -43,10 +44,10 @@ import static org.jware.dviz.util.Utilities.Utility;
  * 
  */
 
-
 public class GrafTestMain {
 
-    AbstractGraphicsHandler drawHandler;
+//    AbstractGraphicsHandler drawHandler;
+    Graphics2DHandler drawHandler;
     Graphics2DHandler drawHandler1;
 
     DrawSomeRectangles rectangleDrawable;
@@ -92,13 +93,15 @@ public class GrafTestMain {
         circleDrawable.setPosition(n1, n2, n3, n3);
         drawHandler.text("Click and move the mouse.", 0, 300);
         drawHandler.loop();
+       
+        drawHandler.setStroke(new BasicStroke(25.0f));
+        drawHandler.fillRect(n1, n2, n3, n3);
+        drawHandler.circle(n1, n2, n3);
+        
+System.out.println(drawHandler1.key());
+        drawHandler1.text("Click and move the mouse.", 0, 300);
+        drawHandler1.text(String.valueOf(drawHandler1.key()), 0, 300);
 
-        drawHandler1.setStroke(new BasicStroke(25.0f));
-        drawHandler1.fillRect(n1, n2, n3, n3);
-        drawHandler1.circle(n1, n2, n3);
-        
-        drawHandler1.line(0, 0, 500, 500);
-        
         if (clock.step()%2==0) {
             drawHandler1.clearScreen();
         }

@@ -20,4 +20,23 @@ RenderingHints. These are things you can easy set and restore, and generally you
 Background color and paint color. Most things will modify these before drawing anyway.
 
 Font: likewise.
+
+Looping over a list and updating, three techniques.
+
+List someList
  
+Traditional:
+            for (int i = 0; i < someList.size(); i++) {
+		someList.get(i).update();
+            }
+For-loop:
+            for (List someList1 : someList) {
+                someList1.update();
+            }
+
+Lamba forEach:
+            someList.stream().forEach((someList1) -> {
+                someList1.update();
+            });
+            
+		
