@@ -17,11 +17,9 @@ package org.jware.dviz.core;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 import java.awt.BasicStroke;
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
@@ -30,10 +28,7 @@ import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -45,27 +40,7 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- * @author J. Paul Jackson <jwareservices@gmail.com>
- * For future use.
- */
-class GrafPortCanvas extends Canvas {
 
-    public GrafPortCanvas() {
-        super();
-    }
-
-    @Override
-    public void paint(Graphics g) {
-    }
-}
-
-/**
- * @author J. Paul Jackson <jwareservices@gmail.com>
- */
-interface JDVLAbstractGraphicsInputListener extends MouseListener, MouseMotionListener, KeyListener {
-    // (J)ware (D)ata (V)isualization (L)ibrary
-}
 
 /**
  * File: AbstractGraphicsHandler.java Created On: 10/15/2014
@@ -74,14 +49,14 @@ interface JDVLAbstractGraphicsInputListener extends MouseListener, MouseMotionLi
  *
  * Purpose: Provide an easy to use wrapper for the Java drawing interfaces.
  */
-abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListener {
+public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListener {
 
     /**
      * This adapter is used to track the number of windows that have been opened
      * by a Handler/s and controls whether we simply close a window when the user
      * clicks the close window control or exit the program altogether. 
      */
-    private static WindowListener windowCloser = new WindowAdapter() {
+    private static final WindowListener windowCloser = new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
             lastWindow--;
             e.getWindow().setVisible(false);
@@ -586,6 +561,7 @@ abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListe
 
     /**
      * Draw a string.
+     * 
      * @param text
      * @param x
      * @param y
