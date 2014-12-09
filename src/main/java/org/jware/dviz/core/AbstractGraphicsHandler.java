@@ -238,7 +238,8 @@ abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListe
     protected int stateCount = 0;
 
     /**
-     *
+     * This array holds the current state so that it can be saved and restored
+     * as needed.
      */
     protected GraphicsState[] grafPortState;
 
@@ -324,7 +325,7 @@ abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListe
     ArrayList<Drawable> drawables;
 
     /**
-     * The array to hold the current set of transformations.
+     * The array count holding the current set of transformations.
      */
     private int stackCount = 0;
 
@@ -342,6 +343,7 @@ abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListe
      * Is mouse active
      */
     protected boolean mousePressed;
+    
     /**
      * Holds the x position of the mouse.
      */

@@ -44,9 +44,8 @@ import static org.jware.dviz.util.Utilities.Utility;
  * 
  */
 
-public class GrafTestMain {
+public class GrafMain {
 
-//    AbstractGraphicsHandler drawHandler;
     Graphics2DHandler drawHandler;
     Graphics2DHandler drawHandler1;
 
@@ -59,7 +58,7 @@ public class GrafTestMain {
     
     Utilities.Clock clock;
 
-    public GrafTestMain() {
+    public GrafMain() {
 
         drawHandler = new Graphics2DHandler();
         drawHandler1 = new Graphics2DHandler();
@@ -72,7 +71,7 @@ public class GrafTestMain {
         clock.startTime();
     }
 
-    public void init() {
+    public void start() {
         drawHandler.addDrawable(rectangleDrawable);
         drawHandler.addDrawable(lineDrawable);
         drawHandler.addDrawable(circleDrawable);
@@ -108,8 +107,8 @@ System.out.println(drawHandler1.key());
     }
 
     public static void main(String[] args) {
-        GrafTestMain gt = new GrafTestMain();
-        gt.init();
+        GrafMain gt = new GrafMain();
+        gt.start();
         while (true) {
             gt.doLoop();
         }
