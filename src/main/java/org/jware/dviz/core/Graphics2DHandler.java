@@ -93,9 +93,7 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
      * @param y2 
      */
     public void fillRect(float x1, float y1, float x2, float y2) {
-        beginDraw();
-        grafPort.fillRect((int) x1, (int) y1, (int) x2, (int) y2);
-        endDraw();
+        fillRect((int) x1, (int) y1, (int) x2, (int) y2);
     }
 
     /**
@@ -110,17 +108,4 @@ public class Graphics2DHandler extends AbstractGraphicsHandler {
         grafPort.fillRect(50, 50, 100, 100);
         endDraw();
     }
-
-    /**
-     * 
-     * @param rgb 
-     */
-    public void background(int rgb) {
-        beginDraw();
-        Color c = new Color(rgb);
-        grafPort.setColor(c);
-        grafPort.fillRect(0, 0, frameWidth, frameHeight);
-        endDraw();
-    }
-
 }

@@ -81,8 +81,11 @@ public class GrafMain {
     public void doLoop() {
 
         drawHandler.setStroke(drawHandler.wideStroke);
-        rectangleDrawable.setPosition(drawHandler.mouseX(), drawHandler.mouseY(), drawHandler.mouseX() + 50, drawHandler.mouseY() + 50);
+        rectangleDrawable.setPosition(drawHandler.mouseX(), drawHandler.mouseY(), 
+                                        drawHandler.mouseX() + 50, drawHandler.mouseY() + 50);
+        
         rectangleDrawable.setColor(Color.BLUE);
+        
         lineDrawable.setPosition(0, 0, drawHandler.mouseX(), drawHandler.mouseY());
 
         int n1 = Utilities.getRandom(200, 400);
@@ -90,7 +93,7 @@ public class GrafMain {
         int n3 = Utilities.getRandomBetween(3, 200);
 
         circleDrawable.setPosition(n1, n2, n3, n3);
-        drawHandler.text("Click and move the mouse.", 0, 300);
+        drawHandler.text("Move the mouse around.", 0, 300);
         drawHandler.loop();
        
         drawHandler.setStroke(new BasicStroke(25.0f));
@@ -98,7 +101,8 @@ public class GrafMain {
         drawHandler.circle(n1, n2, n3);
         
 System.out.println(drawHandler1.key());
-        drawHandler1.text("Click and move the mouse.", 0, 300);
+
+        drawHandler1.text("Move the mouse around.", 0, 300);
         drawHandler1.text(String.valueOf(drawHandler1.key()), 0, 300);
 
         if (clock.step()%2==0) {

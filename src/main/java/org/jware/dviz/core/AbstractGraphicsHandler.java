@@ -16,6 +16,7 @@ package org.jware.dviz.core;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -40,8 +41,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
-
 /**
  * File: AbstractGraphicsHandler.java Created On: 10/15/2014
  *
@@ -49,7 +48,7 @@ import javax.swing.JPanel;
  *
  * Purpose: Provide an easy to use wrapper for the Java drawing interfaces.
  */
-public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInputListener {
+public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputListener {
 
     /**
      * This adapter is used to track the number of windows that have been opened
@@ -532,6 +531,18 @@ public abstract class AbstractGraphicsHandler implements JDVLAbstractGraphicsInp
         beginDraw();
         currentForeColor = c;
         grafPort.setColor(currentForeColor);
+        endDraw();
+    }
+
+     /**
+     * 
+     * @param rgb 
+     */
+    public void background(int rgb) {
+        beginDraw();
+        Color c = new Color(rgb);
+        grafPort.setColor(c);
+        grafPort.fillRect(0, 0, frameWidth, frameHeight);
         endDraw();
     }
 

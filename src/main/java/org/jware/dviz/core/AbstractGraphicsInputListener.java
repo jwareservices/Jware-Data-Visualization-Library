@@ -23,14 +23,14 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 /**
- * File: JDVLAbstractGraphicsInputListener.java 
- * Created On: 08/00/2014
+ * File: AbstractGraphicsInputListener.java 
+ Created On: 08/00/2014
  * 
  * @author J. Paul Jackson <jwareservices@gmail.com>
  *
  * Purpose:
  */
 
-public interface JDVLAbstractGraphicsInputListener extends MouseListener, MouseMotionListener, KeyListener {
+public interface AbstractGraphicsInputListener extends MouseListener, MouseMotionListener, KeyListener {
     // (J)ware (D)ata (V)isualization (L)ibrary
 }
