@@ -1,7 +1,5 @@
 package org.jware.dviz.core;
 
-
-
 /*
  * Copyright (C) 2014 J. Paul Jackson <jwareservices@gmail.com>
  *
@@ -28,7 +26,8 @@ import java.awt.Graphics;
  * 
  * @author J. Paul Jackson <jwareservices@gmail.com>
  *
- * Purpose:
+ * Purpose:  For future use.  I might implement my own buffering and if so
+ * then I'll implement this class.
  */
 
 public class GrafPortCanvas extends Canvas {

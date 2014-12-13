@@ -16,7 +16,6 @@ package org.jware.dviz.core;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Container;
@@ -38,6 +37,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
 import java.util.ArrayList;
+import java.util.Stack;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -52,14 +52,14 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
 
     /**
      * This adapter is used to track the number of windows that have been opened
-     * by a Handler/s and controls whether we simply close a window when the user
-     * clicks the close window control or exit the program altogether. 
+     * by a Handler/s and controls whether we simply close a window when the
+     * user clicks the close window control or exit the program altogether.
      */
     private static final WindowListener windowCloser = new WindowAdapter() {
         public void windowClosing(WindowEvent e) {
             lastWindow--;
             e.getWindow().setVisible(false);
- //           e.getWindow().dispose();
+            //           e.getWindow().dispose();
             if (lastWindow <= 0) {
                 System.exit(0);
             }
@@ -80,16 +80,16 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     public static final float HALF_PI = (float) (Math.PI / 2.0);
 
     /**
-     * Conversion constants to convert degrees to radians by multiplying
-     * the degree by this constant.
+     * Conversion constants to convert degrees to radians by multiplying the
+     * degree by this constant.
      */
-    public static final float DEG_TO_RAD = PI/180.0f;
-    
+    public static final float DEG_TO_RAD = PI / 180.0f;
+
     /**
      * Multiply a radian by this constant to get degree,
      */
-    public static final float RAD_TO_DEG = 180.0f/PI;
-    
+    public static final float RAD_TO_DEG = 180.0f / PI;
+
     /**
      * Key input stuff, ex: if ((key == CODED) && (eventCode == UP))
      */
@@ -164,13 +164,13 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      */
     protected Container focusController;
 
-     /**
+    /**
      * Set to use the same window when creating more than one handler.
      * Unimplemented for now.
-     */    
+     */
     private static boolean REUSE;
-    
-   /**
+
+    /**
      * A window count for exiting the program, Frames will dispose until the
      * last one which will EXIT_ON_CLOSE..
      */
@@ -210,27 +210,22 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      * The array to save the graphics state into.
      */
     protected int stateCount = 0;
-
-    /**
-     * This array holds the current state so that it can be saved and restored
-     * as needed.
-     */
-    protected GraphicsState[] grafPortState;
+    private final Stack<GraphicsState> grafPortState;
 
     /**
      * The default pen size for strokes
      */
-    public  BasicStroke defaultStroke = new BasicStroke(DEFAULT_PEN_SIZE);
+    public BasicStroke defaultStroke = new BasicStroke(DEFAULT_PEN_SIZE);
 
     /**
      * The default pen size for strokes
      */
-    public  BasicStroke wideStroke = new BasicStroke(DEFAULT_PEN_SIZE * 100);
+    public BasicStroke wideStroke = new BasicStroke(DEFAULT_PEN_SIZE * 100);
 
     /**
      * The default pen size for strokes
      */
-    public  Stroke currentStroke;
+    public Stroke currentStroke;
 
     /**
      * The current background colors.
@@ -317,7 +312,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      * Is mouse active
      */
     protected boolean mousePressed;
-    
+
     /**
      * Holds the x position of the mouse.
      */
@@ -339,8 +334,8 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      *
      */
     protected AbstractGraphicsHandler() {
+        this.grafPortState = new Stack<>();
 
-        grafPortState = new GraphicsState[MAX_STACK];
         transformationStack = new AffineTransform[MAX_STACK];
         drawables = new ArrayList<>();
 
@@ -427,14 +422,14 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
         this.frameHeight = height;
     }
 
-    public void setStroke(){
-        currentStroke=defaultStroke;
+    public void setStroke() {
+        currentStroke = defaultStroke;
     }
-    
-    public void setStroke(Stroke stroke){
-        currentStroke=stroke;
+
+    public void setStroke(Stroke stroke) {
+        currentStroke = stroke;
     }
-    
+
     /**
      *
      * @param transform
@@ -472,24 +467,37 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      *
      */
     public void pushState() {
-        grafPortState[stateCount] = new GraphicsState();
-        grafPortState[stateCount].backgroundColor = grafPort.getBackground();
-        grafPortState[stateCount].foregroundColor = grafPort.getColor();
-        grafPortState[stateCount].font = grafPort.getFont();
+        grafPortState.push(new GraphicsState(grafPort.getBackground(), grafPort.getColor(), grafPort.getFont()));
         stateCount++;
     }
 
+    /*   public void pushState() {
+     grafPortState[stateCount] = new GraphicsState();
+     grafPortState[stateCount].backgroundColor = grafPort.getBackground();
+     grafPortState[stateCount].foregroundColor = grafPort.getColor();
+     grafPortState[stateCount].font = grafPort.getFont();
+     stateCount++;
+     }
+     */
     /**
      *
      */
     public void popState() {
         stateCount--;
-        grafPort.setColor(grafPortState[stateCount].foregroundColor);
-        grafPort.setBackground(grafPortState[stateCount].backgroundColor);
-        grafPort.setFont(grafPortState[stateCount].font);
-        grafPortState[stateCount] = null;
+        GraphicsState state = grafPortState.pop();
+        grafPort.setColor(state.getForegroundColor());
+        grafPort.setBackground(state.getBackgroundColor());
+        grafPort.setFont(state.getFont());
     }
 
+    /*   public void popState() {
+     stateCount--;
+     grafPort.setColor(grafPortState[stateCount].foregroundColor);
+     grafPort.setBackground(grafPortState[stateCount].backgroundColor);
+     grafPort.setFont(grafPortState[stateCount].font);
+     grafPortState[stateCount] = null;
+     }
+     */
     /**
      *
      * @param x
@@ -534,9 +542,9 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
         endDraw();
     }
 
-     /**
-     * 
-     * @param rgb 
+    /**
+     *
+     * @param rgb
      */
     public void background(int rgb) {
         beginDraw();
@@ -572,7 +580,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
 
     /**
      * Draw a string.
-     * 
+     *
      * @param text
      * @param x
      * @param y
@@ -582,7 +590,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
         grafPort.drawString(text, y, y);
         endDraw();
     }
-    
+
     /**
      * Call draw on the stored list of drawable objects.
      */
@@ -604,7 +612,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     }
 
     /**
-     * Prepare grafPort for drawing.
+     * Prepare grafPort for drawing when using Drawables.
      */
     protected void beginDraw() {
         grafPort = (Graphics2D) grafPortStrategy.getDrawGraphics();
@@ -623,12 +631,11 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     }
 
     /**
-     * Update is called to do the actual draw. Set up the graphics object,
-     * draw into it, dispose of it, show the draw, force the sync. This is  
-     * not required, as the system will eventually update the screen but 
-     * based on the code snippet I found it can help prevent flickering. 
-     * It can't hurt and I don't see where it really cost anything 
-     * as far a resources go.
+     * Update is called to do the actual draw. Set up the graphics object, draw
+     * into it, dispose of it, show the draw, force the sync. This is not
+     * required, as the system will eventually update the screen but based on
+     * the code snippet I found it can help prevent flickering. It can't hurt
+     * and I don't see where it really cost anything as far as resources go.
      */
     private void update() {
         do {
@@ -735,14 +742,13 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     //       KEY BOARD HANDLER CODE
     //
     ///////////////////////////////////////////////////////
-    
     /**
-     * @return 
+     * @return
      */
     public char key() {
         return key;
     }
- 
+
     /**
      * @param event
      */

@@ -25,45 +25,37 @@ import java.awt.FontMetrics;
  *
  * @author J. Paul Jackson <jwareservices@gmail.com>
  *
- * Purpose: A simple wrapper for storing current screen colors and font information.
+ * Purpose: A simple wrapper for storing current screen colors and font
+ * information.
  */
 public class GraphicsState {
 
-    public Color backgroundColor;
-    public Color foregroundColor;
-    public Font font;
-    public FontMetrics fontMetrics;
+    Color backgroundColor;
+    Color foregroundColor;
+    Font font;
+    FontMetrics fontMetrics;
 
- 
-    public GraphicsState() {
-//        backgroundColor = new Color(0, 0, 0);
-//        foregroundColor = new Color(0, 0, 0);
-//        font=new Font();
+    public GraphicsState(Color backgroundColor, Color foregroundColor, Font font) {
+        this.backgroundColor = backgroundColor;
+        this.foregroundColor = foregroundColor;
+        this.font = font;
+        fontMetrics = null;
 
     }
-    
-   public Color getBackgroundColor() {
+
+    public Color getBackgroundColor() {
         return backgroundColor;
-    }
-
-    public void setBackgroundColor(Color background) {
-        this.backgroundColor = background;
     }
 
     public Color getForegroundColor() {
         return foregroundColor;
     }
 
-    public void setForegroundColor(Color foregroundColor) {
-        this.foregroundColor = foregroundColor;
+    public Font getFont() {
+        return font;
     }
 
     public FontMetrics getFontMetrics() {
         return fontMetrics;
     }
-
-    public void setFontMetrics(FontMetrics fontMetrics) {
-        this.fontMetrics = fontMetrics;
-    }
 }
-

@@ -46,3 +46,46 @@ Lamba forEach:
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
+
+
+https://maven.apache.org/pom.html
+
+https://netbeans.org/projects/versioncontrol/pages/Git_ui#Setup_%28Config_Files%29
+
+
+import java.util.Stack;
+
+AbstractGraphicsHandler {
+
+  private Graphics2D grafPort;
+
+  private final Stack<Graphics2D> grafPortState = new Stack<>();
+
+  protected Graphics2D getGraphPort() {
+    return grafPort;
+  }
+
+  protected void setGraphPort(final Graphics2D graphPort) {
+    this.graphPort = graphPort;
+  }
+
+  protected Stack<Graphcs2D> getGrafPortState() {
+    return grafPortState;
+  }
+
+  ...
+  protected createCurrentGraphicState() {
+     return new GraphicsState(getGraphPort().getBackground(), getGraphPort().getColor(), getGraphPort().getFont());
+  }
+
+  public void pushState() {
+    getGrafPortState.push(createCurrentGraphicState());
+  }
+
+  public void popState() {
+    setGraphPort(getGrafPortState().pop());
+  }
+
+  ...
+}

@@ -30,6 +30,18 @@ import java.awt.Graphics;
  */
 public interface Drawable {
 
+    /**
+     * Override to draw
+     * @param grafPort 
+     */
     public void draw(Graphics grafPort);
+    
+    /**
+     * Set the position of the next element to be drawn
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
     public void setPosition(int x1, int y1, int x2, int y2);
 }
