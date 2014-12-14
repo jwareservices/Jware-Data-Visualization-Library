@@ -26,7 +26,8 @@ package org.jware.dviz.math;
  */
 
 /*
- * Calculate the polar coordinate points from a given radius and angle.
+ * Calculate the polar coordinate points from a given radius and angle.  This
+ * can be used to for example to display a series of objects around a curve.
  */
 import java.awt.Point;
 
