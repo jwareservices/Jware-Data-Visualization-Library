@@ -89,3 +89,32 @@ AbstractGraphicsHandler {
 
   ...
 }
+
+UI Component 	Description
+Blue Badge (Blue badge) 	Indicates the presence of files that have been modified, added or deleted in your working tree. For packages, this badge applies only to the package itself and not its subpackages. For projects or folders, the badge indicates changes within that item, or any of the contained subfolders.
+Red Badge (Red badge) 	Marks projects, folders or packages that contain conflicting files. For packages, this badge applies only to the package itself and not its subpackages. For projects or folders, the badge indicates conflicts within that item, or any of the contained subfolders.
+
+Color coding is applied to file names in order to indicate their current status against the repository:
+Color                           Example 	Description
+No specific color (black) 	Black text 	Indicates that the file has no changes.
+Blue                            Blue text 	Indicates that the file has been locally modified.
+Green                           Green text 	Indicates that the file has been locally added.
+Red                             Red text 	Indicates that the file is in a merge conflict.
+Gray                            Gray text 	Indicates that the file is ignored by Git and will not be included in versioning commands (e.g. Update and Commit). Files cannot be ignored if they are versioned.
+
+File Status Labels
+
+The IDE displays two status values for a file:
+
+    A status describing differences between the files Working Tree and Index state,
+    A status describing differences between the files Index state and current HEAD commit.
+
+File status labels provide a textual indication of the status of versioned files in the IDE's windows:
+Status Label 	Meaning
+-               Unmodified
+A               Added
+U               Updated but unmerged
+M               Modified
+D               Deleted
+I               Ignored
+R               Renamed
