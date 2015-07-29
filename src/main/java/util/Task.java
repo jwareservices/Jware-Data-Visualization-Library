@@ -3,12 +3,9 @@ package util;
 import java.util.concurrent.Executor;
 
 /**
- * * * @author J. Paul Jackson pjackson@vnet.net<p>
+ * @author J. Paul Jackson jwareservices@gmail.com
  * @version 1.3	July 8, 1998
- * <p>
- * <p>
  * @version 2.0 August, 2014
- * <p>
   */
 public abstract class Task extends Object implements Runnable {
 

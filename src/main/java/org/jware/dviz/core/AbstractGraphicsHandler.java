@@ -301,7 +301,8 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     /**
      * The stack holding a list of saved transformations.
      */
-    AffineTransform[] transformationStack;
+    AffineTransform[] transformationStackArray;
+    Stack<AffineTransform> transformationStack;
 
     /**
      * The current Graphics transformation.
@@ -329,14 +330,16 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
     GrafPortCanvas drawCanvas;
 
     /**
+     * ********** BEGIN CODE *************
+     */
+    /**
      * Construct. Initialize the structures to store the graphics states,
      * transformations, and the list of Drawable interfaces.
      *
      */
     protected AbstractGraphicsHandler() {
-        this.grafPortState = new Stack<>();
-
-        transformationStack = new AffineTransform[MAX_STACK];
+        grafPortState = new Stack<>();
+        transformationStack = new Stack<>();
         drawables = new ArrayList<>();
 
         initContainer();
@@ -387,22 +390,34 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
         grafWindow.addWindowListener(windowCloser);
     }
 
+    /**
+     * Initial the buffer strategy.
+     */
     private void initGrafPort() {
         grafWindow.createBufferStrategy(2);
         grafPortStrategy = grafWindow.getBufferStrategy();
     }
 
+    /**
+     * Calculate the display size from the default device configuration
+     */
     private void getDisplaySize() {
-        if (grafPortConfig != null) {
-            GraphicsDevice displayDevice = grafPortConfig.getDevice();
 
-            if (displayDevice != null) {
-                Rectangle screenRect
-                        = displayDevice.getDefaultConfiguration().getBounds();
+        try {
+ //           if (grafPortConfig != null) {
+                GraphicsDevice displayDevice = grafPortConfig.getDevice();
 
-                displayWidth = screenRect.width;
-                displayHeight = screenRect.height;
-            }
+ //               if (displayDevice != null) {
+                    Rectangle screenRect
+                            = displayDevice.getDefaultConfiguration().getBounds();
+
+                    displayWidth = screenRect.width;
+                    displayHeight = screenRect.height;
+//                }
+//            }
+        } catch (NullPointerException np) {
+            displayWidth = frameWidth;
+            displayHeight = frameHeight;
         }
     }
 
@@ -451,7 +466,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      *
      */
     public void pushTransform() {
-        transformationStack[stackCount] = grafPort.getTransform();
+        transformationStack.push(grafPort.getTransform());
         stackCount++;
     }
 
@@ -460,7 +475,7 @@ public abstract class AbstractGraphicsHandler implements AbstractGraphicsInputLi
      */
     public void popTransform() {
         stackCount--;
-        grafPort.setTransform(transformationStack[stackCount]);
+        grafPort.setTransform(transformationStack.pop());
     }
 
     /**
